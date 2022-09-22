@@ -18,7 +18,7 @@ services:
       - LOCAL_ROOT=${LOCAL_ROOT}
       - HACK_LOCAL_ROOT_PARENT=${HACK_LOCAL_ROOT_PARENT}
     volumes:
-      - ${HACK_LOCAL_ROOT_PARENT}:/local_parent
+      - /tmp:/local_parent
   bootloader:
     image: airbyte/bootloader:${VERSION}
     logging: *default-logging
@@ -99,7 +99,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - workspace:${WORKSPACE_ROOT}
-      - ${LOCAL_ROOT}:${LOCAL_ROOT}
+      - /tmp/airbyte_local:/tmp/airbyte_local
   server:
     image: airbyte/server:${VERSION}
     logging: *default-logging
@@ -121,8 +121,6 @@ services:
       - JOB_MAIN_CONTAINER_MEMORY_LIMIT=${JOB_MAIN_CONTAINER_MEMORY_LIMIT}
       - JOB_MAIN_CONTAINER_MEMORY_REQUEST=${JOB_MAIN_CONTAINER_MEMORY_REQUEST}
       - JOBS_DATABASE_MINIMUM_FLYWAY_MIGRATION_VERSION=${JOBS_DATABASE_MINIMUM_FLYWAY_MIGRATION_VERSION:-}
-      - LOCAL_DOCKER_MOUNT=${LOCAL_DOCKER_MOUNT}
-      - LOCAL_ROOT=${LOCAL_ROOT}
       - LOG_LEVEL=${LOG_LEVEL}
       - NEW_SCHEDULER=${NEW_SCHEDULER}
       - SECRET_PERSISTENCE=${SECRET_PERSISTENCE}
@@ -136,7 +134,7 @@ services:
     volumes:
       - workspace:${WORKSPACE_ROOT}
       - data:${CONFIG_ROOT}
-      - ${LOCAL_ROOT}:${LOCAL_ROOT}
+      - /tmp/airbyte_local:/tmp/airbyte_local
   webapp:
     image: airbyte/webapp:${VERSION}
     logging: *default-logging
