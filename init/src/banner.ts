@@ -1,7 +1,7 @@
 import figlet from 'figlet';
 import {max} from 'lodash';
 
-const READY_MSG = 'Faros Community Edition is ready!!';
+const READY_MSG = 'Faros Community Edition is ready!!!';
 
 function main(): void {
   const columns = process.stdout.columns ?? 80;
